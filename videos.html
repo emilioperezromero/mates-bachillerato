@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vídeos · Mates Bachillerato</title>
+<meta name="description" content="Apuntes, vídeos y práctica guiada de Matemáticas para 1º y 2º de Bachillerato.">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-color')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234f46e5'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='white' font-family='sans-serif'%3E%E2%88%91%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="css/styles.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="data/cursos.js"></script>
+<script defer src="data/videos.js"></script>
+<script defer src="js/main.js"></script>
+<script defer src="js/videos.js"></script>
+</head>
+<body data-page="videos">
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo"><span class="logo-mark">&sum;</span><span>Mates<b>Bach</b></span></a>
+    <nav class="site-nav" aria-label="Principal">
+      <a href="index.html" data-page="inicio">Inicio</a>
+      <a href="apuntes.html" data-page="apuntes">Apuntes</a>
+      <a href="videos.html" data-page="videos">Vídeos</a>
+      <a href="practica.html" data-page="practica">Práctica guiada</a>
+    </nav>
+    <div class="header-tools">
+      <label class="curso-select"><span class="sr-only">Tu curso</span><select id="curso-select"></select></label>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Cambiar modo claro/oscuro"></button>
+      <button class="icon-btn nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"></button>
+    </div>
+  </div>
+</header>
+<main>
+<div id="videos-app"></div>
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <span>Mates Bachillerato · Departamento de Matemáticas · <span id="anio"></span></span>
+    <span>Tu progreso se guarda solo en este navegador.</span>
+  </div>
+</footer>
+</body>
+</html>

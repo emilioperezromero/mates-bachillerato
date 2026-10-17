@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mates Bachillerato</title>
+<meta name="description" content="Apuntes, vídeos y práctica guiada de Matemáticas para 1º y 2º de Bachillerato.">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-color')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234f46e5'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='white' font-family='sans-serif'%3E%E2%88%91%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="css/styles.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="data/cursos.js"></script>
+<script defer src="data/ejercicios.js"></script>
+<script defer src="js/main.js"></script>
+<script defer src="js/progreso.js"></script>
+<script defer src="js/inicio.js"></script>
+</head>
+<body data-page="inicio">
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo"><span class="logo-mark">&sum;</span><span>Mates<b>Bach</b></span></a>
+    <nav class="site-nav" aria-label="Principal">
+      <a href="index.html" data-page="inicio">Inicio</a>
+      <a href="apuntes.html" data-page="apuntes">Apuntes</a>
+      <a href="videos.html" data-page="videos">Vídeos</a>
+      <a href="practica.html" data-page="practica">Práctica guiada</a>
+    </nav>
+    <div class="header-tools">
+      <label class="curso-select"><span class="sr-only">Tu curso</span><select id="curso-select"></select></label>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Cambiar modo claro/oscuro"></button>
+      <button class="icon-btn nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"></button>
+    </div>
+  </div>
+</header>
+<main>
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">1º y 2º de Bachillerato · Ciencias y Ciencias Sociales</div>
+    <h1>Aprende matemáticas <span>paso a paso</span>, a tu ritmo.</h1>
+    <p class="lead">Apuntes claros, vídeos explicativos y ejercicios guiados que te corrigen al momento, te dan pistas y te explican tus errores.</p>
+    <div class="btn-row" style="margin-top:24px">
+      <a class="btn btn-primary" data-href="practica.html" href="practica.html">Empezar a practicar</a>
+      <a class="btn" data-href="apuntes.html" href="apuntes.html">Ver apuntes</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:16px">
+  <div class="container">
+    <div class="section-head"><div><div class="eyebrow">Paso 1</div><h2>Elige tu curso</h2></div><p class="muted" style="margin:0">Lo recordaremos para la próxima vez.</p></div>
+    <div id="cursos"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head"><div><div class="eyebrow">Paso 2</div><h2>¿Qué quieres hacer hoy?</h2></div></div>
+    <div class="feature-grid">
+      <a class="card feature" data-href="apuntes.html" href="apuntes.html">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6.5A2.5 2.5 0 0 0 4 21.5"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H19"/></svg></span>
+        <h3>Apuntes</h3>
+        <p>Teoría de cada tema con definiciones, propiedades y ejemplos resueltos.</p>
+        <span class="ir">Ir a los apuntes →</span>
+      </a>
+      <a class="card feature" data-href="videos.html" href="videos.html">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3z"/></svg></span>
+        <h3>Vídeos</h3>
+        <p>Explicaciones en vídeo organizadas por temas para repasar cuando quieras.</p>
+        <span class="ir">Ver los vídeos →</span>
+      </a>
+      <a class="card feature" data-href="practica.html" href="practica.html">
+        <span class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>
+        <h3>Práctica guiada</h3>
+        <p>Ejercicios paso a paso con corrección inmediata, pistas y explicación de los errores.</p>
+        <span class="ir">Empezar a practicar →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head"><div><div class="eyebrow">Cómo funciona</div><h2>La práctica guiada</h2></div></div>
+    <div class="como-grid">
+      <div class="como-item"><div class="num">1</div><h3>Paso a paso</h3><p>Cada ejercicio se divide en pasos. Respondes uno y pasas al siguiente.</p></div>
+      <div class="como-item"><div class="num">2</div><h3>Corrección al momento</h3><p>Se acepta cualquier forma equivalente: 1/2, 0,5 o 2/4 valen lo mismo.</p></div>
+      <div class="como-item"><div class="num">3</div><h3>Pistas y errores típicos</h3><p>Si fallas, te decimos qué ha podido pasar y puedes pedir pistas graduadas.</p></div>
+      <div class="como-item"><div class="num">4</div><h3>Siempre nuevos números</h3><p>Al repetir un ejercicio cambian los datos: practicas sin memorizar.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-bottom:64px">
+  <div class="container">
+    <div class="section-head"><div><div class="eyebrow">Tu progreso</div><h2>Cómo vas</h2></div></div>
+    <div id="progreso"></div>
+  </div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <span>Mates Bachillerato · Departamento de Matemáticas · <span id="anio"></span></span>
+    <span>Tu progreso se guarda solo en este navegador.</span>
+  </div>
+</footer>
+</body>
+</html>
