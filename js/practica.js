@@ -17,6 +17,8 @@
 
   const ejerciciosDe = temaId => EJERCICIOS.filter(e => e.tema === temaId);
   const temasCurso = () => App.temasDe(App.curso);
+  const hayApuntes = temaId => (window.APUNTES_INDICE || [])
+    .some(a => a.practicar === temaId && a.cursos.includes(App.curso));
 
   function render() {
     if (!App.curso) {
@@ -114,7 +116,7 @@
         <h1>${esc(t.titulo)}</h1>
         <p>${esc(t.resumen)}</p>
         <div class="btn-row">
-          <a class="btn btn-soft btn-sm" href="${url('apuntes.html', { tema: temaId })}">${icon('book')} Apuntes del tema</a>
+          ${hayApuntes(temaId) ? `<a class="btn btn-soft btn-sm" href="${url('apuntes.html', { tema: temaId })}">${icon('book')} Apuntes del tema</a>` : ''}
           <a class="btn btn-soft btn-sm" href="${url('videos.html', { tema: temaId })}">${icon('video')} Vídeos del tema</a>
         </div>
       </div>
@@ -413,7 +415,7 @@
               : ['medio', 'checkCircle', `Correcto con ayuda (${s.errores} fallo${s.errores === 1 ? '' : 's'}, ${s.pistas} pista${s.pistas === 1 ? '' : 's'})`];
             return `<li><span class="${cls}">${icon(ic)}</span> Paso ${i + 1}: ${t}</li>`;
           }).join('')}</ul>
-          ${nota < 60 ? `<p><a href="${url('apuntes.html', { tema: ej.tema })}">${icon('book')} Repasar los apuntes de ${esc(TEMAS[ej.tema].titulo)}</a></p>` : ''}
+          ${nota < 60 && hayApuntes(ej.tema) ? `<p><a href="${url('apuntes.html', { tema: ej.tema })}">${icon('book')} Repasar los apuntes de ${esc(TEMAS[ej.tema].titulo)}</a></p>` : ''}
           <div class="btn-row">
             <button class="btn b-rep">${icon('refresh')} ${ej.generar ? 'Repetir con otros números' : 'Repetir'}</button>
             ${sig ? `<button class="btn btn-primary b-sig">Siguiente ejercicio ${icon('arrowR')}</button>` : `<button class="btn btn-primary b-lista">Volver al tema ${icon('arrowR')}</button>`}

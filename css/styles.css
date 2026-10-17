@@ -267,6 +267,7 @@ svg.icon { width: 1.15em; height: 1.15em; flex: none; vertical-align: -0.2em; }
 .page-head { padding: 32px 0 8px; }
 .page-head p { color: var(--muted); max-width: 680px; }
 .layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 28px; padding-top: 20px; padding-bottom: 56px; align-items: start; }
+.layout > * { min-width: 0; }
 .sidebar { min-width: 0; position: sticky; top: 84px; display: flex; flex-direction: column; gap: 18px; max-height: calc(100vh - 100px); overflow: auto; padding-bottom: 8px; }
 .side-group h4 { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 6px 10px; }
 .side-link {
@@ -338,6 +339,36 @@ svg.icon { width: 1.15em; height: 1.15em; flex: none; vertical-align: -0.2em; }
 [data-theme="dark"] .caja-ej { --cc: #34d399; }
 [data-theme="dark"] .caja-obs { --cc: #fbbf24; }
 [data-theme="dark"] .caja-imp { --cc: #f87171; }
+.caja-libre { --cc: var(--caja); }
+[data-theme="dark"] .caja-libre { --cc: color-mix(in srgb, var(--caja) 55%, white); }
+.caja-libre > .caja-titulo { font-size: 1rem; }
+
+/* Elementos de los apuntes importados de LaTeX */
+.apunte hr { border: 0; border-top: 1px solid var(--border); margin: 1.2em 0; }
+.apunte .fs-xl { font-size: 1.45em; }
+.apunte .fs-l { font-size: 1.25em; }
+.apunte .fs-m { font-size: 1.1em; }
+.apunte .fs-s { font-size: .9em; }
+.apunte .fs-xs { font-size: .8em; }
+.apunte .fbox { display: inline-block; border: 1px solid currentColor; border-radius: 6px; padding: 2px 10px; }
+.apunte .marcado { padding: 0 4px; border-radius: 4px; }
+[data-theme="dark"] .apunte .marcado { color: #111827; }
+[data-theme="dark"] .apunte span[style^="color"] { filter: brightness(1.7); }
+.apunte .leyenda { display: block; font-size: .88em; color: var(--muted); text-align: center; margin-top: 4px; }
+.apunte .figura { margin: 1em 0; text-align: center; }
+.apunte .minipagina { display: inline-block; vertical-align: top; width: calc(var(--w) - 2%); margin-right: 2%; }
+.apunte .multicol { column-count: var(--cols); column-gap: 2.5rem; }
+.apunte .multicol > * { break-inside: avoid; }
+.apunte-img { max-width: 100%; height: auto; background: #fff; padding: 6px; }
+@media (max-width: 700px) {
+  .apunte .minipagina { display: block; width: 100%; margin-right: 0; }
+  .apunte .multicol { column-count: 1; }
+  /* Fórmulas largas que no caben: se desplazan dentro de su párrafo, no la página */
+  .apunte p, .apunte li, .apunte .minipagina { overflow-x: auto; overflow-y: hidden; }
+}
+.apunte .centro .caja { text-align: left; }
+/* El MathML oculto de KaTeX va en posición absoluta: así se queda dentro de su fórmula */
+.katex { position: relative; }
 
 /* ---------- Vídeos ---------- */
 .filtros { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 24px; }

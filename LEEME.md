@@ -12,7 +12,8 @@ Haz doble clic en `index.html`. Necesitas conexión a internet para que se vean 
 | Quiero cambiar… | Archivo |
 |---|---|
 | Cursos y temas de cada curso | `data/cursos.js` |
-| Apuntes (en LaTeX) | `data/apuntes.js` |
+| Apuntes (en LaTeX) | tus `.tex` en `apuntes_latex/` + el importador (ver abajo) |
+| Qué tema va en qué curso | lista `LISTA` en `herramientas/importar_apuntes.js` |
 | Vídeos | `data/videos.js` |
 | Ejercicios guiados | `data/ejercicios.js` |
 | Colores y diseño | `css/styles.css` |
@@ -21,19 +22,26 @@ No hace falta tocar nada de la carpeta `js/`.
 
 ## Añadir o cambiar apuntes
 
-En `data/apuntes.js`, cada tema tiene un bloque `latex: String.raw\`...\``. Pega ahí tu LaTeX.
-Puedes pegar el documento entero: solo se usa lo que hay entre `\begin{document}` y `\end{document}`.
+Los apuntes salen directamente de tus archivos `.tex` de Overleaf:
 
-Se entiende: `\section`, `\subsection`, `itemize`, `enumerate`, `tabular`, `center`, `\textbf`, `\emph`, `\href`,
-las fórmulas (`$...$`, `$$...$$`, `\[...\]`, `align`, `equation`…) y estos entornos con recuadro de color:
-`definicion`, `teorema`, `propiedad`, `regla`, `ejemplo`, `ejercicio`, `solucion`, `observacion`, `nota`,
-`recuerda`, `importante`, `cuidado` y `demostracion`. Todos admiten título opcional: `\begin{teorema}[de Bolzano]`.
+1. Copia tus `.tex` en la carpeta `apuntes_latex/`, con las mismas subcarpetas (Análisis, Integrales, Álgebra…).
+   Esta carpeta **no se publica**: solo se sube el resultado.
+2. Ejecuta el importador desde la carpeta de la web:
+   ```
+   node herramientas/importar_apuntes.js
+   ```
+3. Revisa la web y publícala (`git add -A`, `git commit`, `git push`).
 
-Dos precauciones:
-1. No uses comillas invertidas (\`) en el texto.
-2. No escribas `$` pegado a `{` (pon un espacio: `$ {`).
+El importador:
+- Convierte cada dibujo TikZ / pgfplots / forest en una imagen SVG (en `apuntes/fig/`) usando MiKTeX.
+  Solo recompila los dibujos que han cambiado.
+- Pasa los `tcolorbox` (y los definidos con `\newtcolorbox`) a recuadros de color, y los colores de `\definecolor` a la web.
+- Escribe el resultado en `data/apuntes.js` (no lo edites a mano).
+- Avisa de los dibujos que no compilan y guarda su `.tex` y su `.log` en `apuntes_latex/_errores/`.
 
-Si además tienes el PDF, guárdalo en una carpeta `apuntes/` y pon `pdf: 'apuntes/nombre.pdf'`. Aparecerá un botón para descargarlo.
+Para añadir un tema nuevo, o cambiar en qué cursos aparece, edita la lista `LISTA` al principio de
+`herramientas/importar_apuntes.js`. Cada tema indica su archivo, título, bloque, cursos y el tema de práctica
+con el que se enlaza. Si añades `pdf: 'apuntes/nombre.pdf'`, aparecerá un botón para descargar el PDF.
 
 ## Añadir vídeos
 

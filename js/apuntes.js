@@ -1,10 +1,14 @@
 /* =========================================================================
-   Página de apuntes
+   Página de apuntes (los datos están en data/apuntes.js)
    ========================================================================= */
 (function () {
   const root = document.getElementById('apuntes-app');
   const { icon, esc, url } = App;
-  let temaSel = App.params.get('tema');
+  const APUNTES = window.APUNTES || [];
+  let sel = App.params.get('ap');
+  const temaPedido = App.params.get('tema'); // enlaces desde la práctica
+
+  const delCurso = () => APUNTES.filter(a => a.cursos.includes(App.curso));
 
   function render() {
     if (!App.curso) {
@@ -14,48 +18,54 @@
       App.selectorCursos(document.getElementById('elige'));
       return;
     }
-    const temas = App.temasDe(App.curso);
-    if (!temas.some(t => t.id === temaSel)) temaSel = temas[0] && temas[0].id;
+    const lista = delCurso();
+    if (!lista.some(a => a.id === sel)) {
+      const delTema = temaPedido && lista.find(a => a.practicar === temaPedido);
+      sel = (delTema || lista[0] || {}).id;
+    }
     root.innerHTML = `<div class="container layout"><aside class="sidebar" id="side"></aside><section id="main"></section></div>`;
     lateral();
-    mostrar(temaSel);
+    mostrar(sel);
   }
 
   function lateral() {
-    const temas = App.temasDe(App.curso);
-    const bloques = [...new Set(temas.map(t => t.bloque))];
+    const lista = delCurso();
+    const bloques = [...new Set(lista.map(a => a.bloque))];
     const side = document.getElementById('side');
     side.innerHTML = bloques.map(b => `<div class="side-group"><h4>${esc(b)}</h4>
-      ${temas.filter(t => t.bloque === b).map(t => `<button class="side-link${t.id === temaSel ? ' activo' : ''}" data-tema="${t.id}">${esc(t.titulo)}</button>`).join('')}
+      ${lista.filter(a => a.bloque === b).map(a => `<button class="side-link${a.id === sel ? ' activo' : ''}" data-ap="${a.id}">${esc(a.titulo)}</button>`).join('')}
     </div>`).join('');
-    side.querySelectorAll('[data-tema]').forEach(b => b.addEventListener('click', () => {
-      temaSel = b.dataset.tema;
+    side.querySelectorAll('[data-ap]').forEach(b => b.addEventListener('click', () => {
+      sel = b.dataset.ap;
       lateral();
-      mostrar(temaSel);
+      mostrar(sel);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }));
   }
 
-  function mostrar(temaId) {
-    App.setURL({ tema: temaId });
-    const t = TEMAS[temaId];
-    const ap = (window.APUNTES || {})[temaId] || {};
+  function mostrar(id) {
     const main = document.getElementById('main');
+    const ap = APUNTES.find(a => a.id === id);
+    if (!ap) {
+      main.innerHTML = `<div class="card vacio"><div class="icono">${icon('book')}</div><p class="muted">Todavía no hay apuntes para este curso.</p></div>`;
+      return;
+    }
+    App.setURL({ ap: id });
+    const practicable = ap.practicar && App.temasDe(App.curso).some(t => t.id === ap.practicar);
     main.innerHTML = `
       <div class="tema-head">
-        <div class="eyebrow">${esc(t.bloque)}</div>
-        <h1>${esc(t.titulo)}</h1>
-        <p>${esc(t.resumen)}</p>
+        <div class="eyebrow">${esc(ap.bloque)}</div>
+        <h1>${esc(ap.titulo)}</h1>
+        ${ap.resumen ? `<p>${esc(ap.resumen)}</p>` : ''}
         <div class="btn-row no-print">
-          <a class="btn btn-primary btn-sm" href="${url('practica.html', { tema: temaId })}">${icon('target')} Practicar este tema</a>
-          <a class="btn btn-soft btn-sm" href="${url('videos.html', { tema: temaId })}">${icon('video')} Vídeos</a>
+          ${practicable ? `<a class="btn btn-primary btn-sm" href="${url('practica.html', { tema: ap.practicar })}">${icon('target')} Practicar</a>
+          <a class="btn btn-soft btn-sm" href="${url('videos.html', { tema: ap.practicar })}">${icon('video')} Vídeos</a>` : ''}
           ${ap.pdf ? `<a class="btn btn-sm" href="${esc(ap.pdf)}" target="_blank" rel="noopener">${icon('file')} PDF</a>` : ''}
           <button class="btn btn-ghost btn-sm b-print">${icon('print')} Imprimir</button>
         </div>
       </div>
       <nav class="card toc" hidden><h4>En este tema</h4><ol></ol></nav>
-      <article class="card apunte">${ap.latex ? LatexHTML.convert(ap.latex)
-        : `<div class="vacio"><div class="icono">${icon('book')}</div><p class="muted">Los apuntes de este tema estarán disponibles pronto.</p></div>`}</article>`;
+      <article class="card apunte">${LatexHTML.convert(ap.latex)}</article>`;
     main.querySelector('.b-print').addEventListener('click', () => window.print());
     const art = main.querySelector('.apunte');
     App.renderMath(art);
@@ -72,6 +82,6 @@
     }
   }
 
-  document.addEventListener('curso-cambiado', () => { temaSel = null; render(); });
+  document.addEventListener('curso-cambiado', () => { sel = null; render(); });
   render();
 })();

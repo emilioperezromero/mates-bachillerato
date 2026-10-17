@@ -82,7 +82,8 @@
   const MACROS = {
     '\\R': '\\mathbb{R}', '\\N': '\\mathbb{N}', '\\Z': '\\mathbb{Z}', '\\Q': '\\mathbb{Q}', '\\C': '\\mathbb{C}',
     '\\sen': '\\operatorname{sen}', '\\tg': '\\operatorname{tg}', '\\cotg': '\\operatorname{cotg}',
-    '\\cosec': '\\operatorname{cosec}', '\\arcsen': '\\operatorname{arcsen}', '\\arctg': '\\operatorname{arctg}'
+    '\\cosec': '\\operatorname{cosec}', '\\arcsen': '\\operatorname{arcsen}', '\\arctg': '\\operatorname{arctg}',
+    '\\euro': '\\text{€}'
   };
   const DELIMITADORES = [
     { left: '$$', right: '$$', display: true },
