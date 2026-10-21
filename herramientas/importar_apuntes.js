@@ -420,4 +420,6 @@ async function principal() {
   console.log(`\nListo: ${resultado.length} temas en data/apuntes.js` + (fallos.length ? `, ${fallos.length} dibujo(s) con error` : ''));
 }
 
-principal();
+if (require.main === module) principal();
+// Lo usa también herramientas/apuntes_completos.js
+module.exports = { LISTA, quitarComentarios, quitarDibujosSinCerrar, quitarPortada, leerOpcional, leerObligatorio };
