@@ -12,7 +12,7 @@ Haz doble clic en `index.html`. Necesitas conexión a internet para que se vean 
 | Quiero cambiar… | Archivo |
 |---|---|
 | Cursos y temas de cada curso | `data/cursos.js` |
-| Apuntes (en LaTeX) | tus `.tex` en `apuntes_latex/` + el importador (ver abajo) |
+| Apuntes (en LaTeX) | tus `.tex` en la carpeta central `ies/latex/` + el importador (ver abajo) |
 | Qué tema va en qué curso | lista `LISTA` en `herramientas/importar_apuntes.js` |
 | Vídeos | `data/videos.js` |
 | Ejercicios guiados | `data/ejercicios.js` |
@@ -22,10 +22,11 @@ No hace falta tocar nada de la carpeta `js/`.
 
 ## Añadir o cambiar apuntes
 
-Los apuntes salen directamente de tus archivos `.tex` de Overleaf:
+Los apuntes salen directamente de tus archivos `.tex`, que están en la carpeta central `ies/latex/`
+(fuera de este repositorio: **no se publica**, solo se sube el resultado). Se editan con VS Code
+(acceso directo «Mis materiales LaTeX» en el Escritorio).
 
-1. Copia tus `.tex` en la carpeta `apuntes_latex/`, con las mismas subcarpetas (Análisis, Integrales, Álgebra…).
-   Esta carpeta **no se publica**: solo se sube el resultado.
+1. Edita o añade el `.tex` en `ies/latex/` (Análisis, Integrales, Álgebra…).
 2. Ejecuta el importador desde la carpeta de la web:
    ```
    node herramientas/importar_apuntes.js
@@ -37,7 +38,7 @@ El importador:
   Solo recompila los dibujos que han cambiado.
 - Pasa los `tcolorbox` (y los definidos con `\newtcolorbox`) a recuadros de color, y los colores de `\definecolor` a la web.
 - Escribe el resultado en `data/apuntes.js` (no lo edites a mano).
-- Avisa de los dibujos que no compilan y guarda su `.tex` y su `.log` en `apuntes_latex/_errores/`.
+- Avisa de los dibujos que no compilan y guarda su `.tex` y su `.log` en `ies/latex/_errores/`.
 
 Para añadir un tema nuevo, o cambiar en qué cursos aparece, edita la lista `LISTA` al principio de
 `herramientas/importar_apuntes.js`. Cada tema indica su archivo, título, bloque, cursos y el tema de práctica

@@ -4,7 +4,7 @@
    Uso (desde la carpeta de la web):
        node herramientas/importar_apuntes.js [carpeta_con_los_tex]
 
-   - Por defecto lee la carpeta  apuntes_latex/  (no se publica).
+   - Por defecto lee la carpeta central  ies/latex/  (fuera del repo: no se publica).
    - Qué archivo es cada tema, su bloque y sus cursos se indica en LISTA.
    - Cada dibujo TikZ / pgfplots / forest se compila con LaTeX (MiKTeX)
      y se guarda como imagen SVG en  apuntes/fig/ .  Solo se recompilan
@@ -18,7 +18,7 @@ const { execFile } = require('child_process');
 const os = require('os');
 
 const ROOT = path.join(__dirname, '..');
-const SRC = path.resolve(process.argv[2] || path.join(ROOT, 'apuntes_latex'));
+const SRC = path.resolve(process.argv[2] || path.join(ROOT, '..', 'latex'));
 const FIG_DIR = path.join(ROOT, 'apuntes', 'fig');
 const SALIDA = path.join(ROOT, 'data', 'apuntes.js');
 const ZOOM = 1.3; // los dibujos se amplían para que su texto se lea como el de la página
@@ -27,13 +27,14 @@ const ZOOM = 1.3; // los dibujos se amplían para que su texto se lea como el de
 const C1 = ['1c', '1s'], TODOS = ['1c', '1s', '2c', '2s'];
 const LISTA = [
   { id: 'funciones', archivo: 'Análisis/1.0 Introducción Funciones .tex', titulo: 'Funciones elementales y a trozos', bloque: 'Análisis', cursos: TODOS, practicar: 'limites' },
+  { id: 'dominio', archivo: 'Análisis/1.12 Dominio.tex', titulo: 'Dominio de definición', bloque: 'Análisis', cursos: TODOS },
   { id: 'limites', archivo: 'Análisis/1.1 Límites.tex', titulo: 'Límites', bloque: 'Análisis', cursos: TODOS, practicar: 'limites' },
   { id: 'asintotas', archivo: 'Análisis/1.2 Asíntotas.tex', titulo: 'Asíntotas y ramas infinitas', bloque: 'Análisis', cursos: TODOS, practicar: 'limites' },
   { id: 'continuidad', archivo: 'Análisis/1.3 Continuidad.tex', titulo: 'Continuidad', bloque: 'Análisis', cursos: TODOS, practicar: 'limites' },
   { id: 'derivadas', archivo: 'Análisis/1.4 Derivadas.tex', titulo: 'Derivadas', bloque: 'Análisis', cursos: TODOS, practicar: 'derivadas' },
   { id: 'tangente', archivo: 'Análisis/1.5 Recta Tangente.tex', titulo: 'Recta tangente', bloque: 'Análisis', cursos: TODOS, practicar: 'derivadas' },
   { id: 'normal', archivo: 'Análisis/1.6 Recta Normal.tex', titulo: 'Recta normal', bloque: 'Análisis', cursos: ['1c', '2c'], practicar: 'derivadas' },
-  { id: 'lhopital', archivo: 'Análisis/1.7 Regla de L_Hôpital.tex', titulo: "Regla de L'Hôpital", bloque: 'Análisis', cursos: ['2c', '2s'], practicar: 'limites' },
+  { id: 'lhopital', archivo: "Análisis/1.7 Regla de L'Hôpital.tex", titulo: "Regla de L'Hôpital", bloque: 'Análisis', cursos: ['2c', '2s'], practicar: 'limites' },
   { id: 'monotonia', archivo: 'Análisis/1.8 Monotonía.tex', titulo: 'Monotonía y extremos', bloque: 'Análisis', cursos: TODOS, practicar: 'derivadas' },
   { id: 'curvatura', archivo: 'Análisis/1.9 Curvatura.tex', titulo: 'Curvatura y puntos de inflexión', bloque: 'Análisis', cursos: ['2c', '2s'], practicar: 'derivadas' },
   { id: 'optimizacion', archivo: 'Análisis/1.10 Optimización.tex', titulo: 'Optimización', bloque: 'Análisis', cursos: ['2c', '2s'], practicar: 'derivadas' },
@@ -49,7 +50,7 @@ const LISTA = [
   { id: 'sistemas', archivo: 'Álgebra/3.3 Sistemas de Ecuaciones.tex', titulo: 'Sistemas de ecuaciones', bloque: 'Álgebra', cursos: ['2c', '2s'], practicar: 'matrices' },
   { id: 'sistemas-contexto', archivo: 'Álgebra/3.4 Ej. Sistemas Contextualizados.tex', titulo: 'Problemas de sistemas', bloque: 'Álgebra', cursos: ['2c', '2s'], practicar: 'matrices' },
   { id: 'geometria', archivo: 'Geometría/4.1 Geometría.tex', titulo: 'Geometría en el espacio', bloque: 'Geometría', cursos: ['2c'] },
-  { id: 'probabilidad', archivo: 'Probabilidad/Probabilidad.tex', titulo: 'Probabilidad', bloque: 'Probabilidad', cursos: ['2c', '2s'], practicar: 'probabilidad' },
+  { id: 'probabilidad', archivo: 'Probabilidad/5.1 Probabilidad.tex', titulo: 'Probabilidad', bloque: 'Probabilidad', cursos: ['2c', '2s'], practicar: 'probabilidad' },
   { id: 'repaso-derivadas', archivo: 'Repaso/Derivadas ESO.tex', titulo: 'Repaso: derivadas', bloque: 'Repaso', cursos: TODOS, practicar: 'derivadas' },
   { id: 'repaso-integrales', archivo: 'Repaso/IntegralesESO.tex', titulo: 'Repaso: integrales', bloque: 'Repaso', cursos: ['2c', '2s'], practicar: 'integrales' },
   { id: 'repaso-sistemas', archivo: 'Repaso/Sistemas Lineales 2 Incógnitas.tex', titulo: 'Repaso: sistemas 2×2', bloque: 'Repaso', cursos: TODOS }

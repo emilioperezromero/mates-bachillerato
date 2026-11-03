@@ -5,9 +5,9 @@
    Uso (desde la carpeta de la web):
        node herramientas/apuntes_completos.js [carpeta_con_los_tex]
 
-   - Lee los .tex de  apuntes_latex/  en el orden de la lista de temas
+   - Lee los .tex de la carpeta central  ies/latex/  en el orden de la lista de temas
      de importar_apuntes.js (un capítulo por tema, una parte por bloque).
-   - Escribe  apuntes_latex/completo/apuntes_completos.tex  (un único
+   - Escribe  ies/latex/_apuntes_completos/apuntes_completos.tex  (un único
      archivo que también se puede subir tal cual a Overleaf) y lo compila
      con pdflatex en esa misma carpeta.
    ========================================================================= */
@@ -17,8 +17,8 @@ const { execFile } = require('child_process');
 const { LISTA, quitarComentarios, quitarDibujosSinCerrar, quitarPortada, leerOpcional, leerObligatorio } = require('./importar_apuntes.js');
 
 const ROOT = path.join(__dirname, '..');
-const SRC = path.resolve(process.argv[2] || path.join(ROOT, 'apuntes_latex'));
-const DEST = path.join(SRC, 'completo');
+const SRC = path.resolve(process.argv[2] || path.join(ROOT, '..', 'latex'));
+const DEST = path.join(ROOT, '..', 'latex', '_apuntes_completos');
 const NOMBRE = 'apuntes_completos';
 
 const PREAMBULO = String.raw`\documentclass[12pt,a4paper,oneside,openany]{book}

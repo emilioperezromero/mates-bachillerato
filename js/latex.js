@@ -86,7 +86,10 @@ const LatexHTML = (() => {
         : m[2] === 'bfseries' ? '<strong>' : m[2] === 'itshape' ? '<em>' : m[2] ? '<span>'
           : `<span style="color:${colorSeguro(m[3])}">`;
       const cierra = m[2] === 'bfseries' ? '</strong>' : m[2] === 'itshape' ? '</em>' : '</span>';
-      t = t.slice(0, m.index) + abre + t.slice(ini, fin) + cierra + t.slice(fin);
+      // {\small ...}: quita también las llaves del grupo para que no se vean
+      // (no si la llave es el argumento de un comando: \section*{\color{red} ...})
+      const grupo = t[m.index - 1] === '{' && t[fin] === '}' && !/[A-Za-z*\]}]/.test(t[m.index - 2] || '');
+      t = t.slice(0, m.index - (grupo ? 1 : 0)) + abre + t.slice(ini, fin) + cierra + t.slice(fin + (grupo ? 1 : 0));
     }
     return t;
   }
